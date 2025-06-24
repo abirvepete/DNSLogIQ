@@ -1,0 +1,21 @@
+BaseTable:
+  fields:
+    - id
+    - timestamp
+    - level
+    - category
+    - raw
+    - subcategory
+
+DnsQueryEvents:
+  fields:
+    - query_contant
+    - rewrite_ttl
+    - query_type
+    - query_result
+    - conn_id
+    - spendtime
+    - dns_rules_name
+    - dns_rules_type
+    - dns_action
+    - dns_server
