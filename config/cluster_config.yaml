@@ -1,0 +1,9 @@
+vectorizer:
+  min_df: 2
+  stop_words: english
+  ngram_range: [1, 2]
+
+clustering:
+  algorithm: "KMeans"
+  n_clusters: 5
+  random_state: 42
