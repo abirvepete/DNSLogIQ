@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-def setup_logger(logger_name: str, log_dir="test/action_logs"):
+def setup_logger(logger_name: str, log_dir=Path(__file__).resolve().parents[2]/"data"/"action_logs"):
     """
     创建并配置一个通用日志记录器
     :param logger_name: 日志记录器名称（即代码模块名）

@@ -25,7 +25,7 @@ def clean_prefix_of_line(log_line: str) -> list:
         return parts[3:]
     else:
         print(f"无法处理日志行：{log_line}")
-        return 1
+        exit(1)
 
 def write_cleaned_logs(input_path, output_path):
     """
@@ -47,8 +47,6 @@ def write_cleaned_logs(input_path, output_path):
                 print(f"错误：输入文件 {input_path} 不存在")
                 exit(1)
 
-            # 预编译正则表达式用于高效匹配
-            prefix_pattern = re.compile(r'$$[^$$]*$$ ')  # 匹配 [xxx] 格式
 
             # 使用缓冲区批量写入
             buffer = []
@@ -96,7 +94,7 @@ def main():
     """
     root_dir = Path(__file__).resolve().parents[2]
     print(root_dir)
-    original_file = root_dir  /'data'/'raw_logs'/'demo-test.log'
+    original_file = root_dir /'data'/'raw_logs'/'demo.log'
     print(f"找到 {original_file} 原始日志文件")
     del_prefix_file = root_dir  /'data'/'processed_logs'/'nonprefix.log'
     write_cleaned_logs(original_file, del_prefix_file)

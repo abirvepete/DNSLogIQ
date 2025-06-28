@@ -1,11 +1,9 @@
-import logging
 import sys
-from functools import wraps
 from pathlib import Path
-import time
+from functools import wraps
 from src.utils.common_logger import setup_logger
 
-def setup_action_logger(log_dir="data/action_logs"):
+def setup_action_logger(log_dir=Path(__file__).resolve().parents[2]/"data"/"action_logs"):
     """
     初始化操作日志系统
     :param log_dir: 日志存储目录
@@ -25,8 +23,14 @@ def log_action(func):
         action_name = func.__name__
         
         # 重定向标准输出
+        def write(buf):
+            for line in buf.rstrip().splitlines():
+                ACTION_LOGGER.info(f"{line}", extra={'action': action_name})
+
         class PrintToLogger:
-            def write(self, buf):
+            @staticmethod
+            def write(buf):
+                # 将缓冲区内容按行分割并记录到日志
                 for line in buf.rstrip().splitlines():
                     ACTION_LOGGER.info(f"{line}", extra={'action': action_name})
 
