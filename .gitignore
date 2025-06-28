@@ -1,3 +1,4 @@
 /.idea
 /docs/analysis_report.md
 /data/*
+/src/utils/test/

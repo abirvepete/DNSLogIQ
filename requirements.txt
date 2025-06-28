@@ -1,5 +1,10 @@
-scikit-learn
+scikit-learn~=1.7.0
 pyyaml
 numpy
 pandas
 # 如果 Python 版本低于 3.7，可加上：dataclasses
+psutil~=5.9.0
+pip~=25.1
+zlib~=1.2.13
+wheel~=0.45.1
+openssl~=3.0.16

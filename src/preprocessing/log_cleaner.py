@@ -7,7 +7,10 @@ Step 1: 去头模块
 import re
 import argparse
 from pathlib import Path
-
+def clean_log_line(line:str):
+    parts = line.split(' ')
+    return " ".join(parts[4:])
+    print( line)
 def normalize_line(line: str) -> str:
     # 用正则一把清理前缀：
     # +0800 2025-06-22 07:27:53 INFO [2174766721 0ms] → 空
@@ -20,7 +23,6 @@ def normalize_line(line: str) -> str:
     return cleaned.strip()
 
 def main():
-    from pathlib import Path
 
     # 获取当前脚本文件的绝对路径
     current_file = Path(__file__).resolve()
