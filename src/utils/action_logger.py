@@ -5,7 +5,7 @@ from pathlib import Path
 import time
 from src.utils.common_logger import setup_logger
 
-def setup_action_logger(log_dir="test/action_logs"):
+def setup_action_logger(log_dir="data/action_logs"):
     """
     初始化操作日志系统
     :param log_dir: 日志存储目录

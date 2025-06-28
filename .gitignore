@@ -2,3 +2,8 @@
 /docs/analysis_report.md
 /data/*
 /src/utils/test/
+/test/del_prefix.log
+/test/demo-test.log
+/test/test/action_logs/snakeviz/main.prof
+/test/test/action_logs/project_logs.log
+/test/test.py

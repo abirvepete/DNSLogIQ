@@ -2,7 +2,7 @@ import cProfile
 from pathlib import Path
 
 # 确保 snakeviz 存放目录存在
-OUTPUT_DIR = Path("test/action_logs/snakeviz")
+OUTPUT_DIR = Path("data/snakeviz")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def performance_monitor(func):

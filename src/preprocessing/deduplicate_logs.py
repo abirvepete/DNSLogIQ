@@ -5,7 +5,7 @@ deduplicate_logs.py
 """
 
 from pathlib import Path
-from src.preprocessing.log_cleaner import normalize_line
+from src.preprocessing.log_clean_prefix import normalize_line
 
 
 def deduplicate_logs(log_file: str) -> list:
