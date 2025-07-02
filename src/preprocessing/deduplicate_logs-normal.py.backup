@@ -1,14 +1,17 @@
-
+import asyncio
+# 异步文件读取（使用 aiofiles）
+import aiofiles
 from pathlib import Path
 from typing import List
-import difflib
+
 # 从项目中导入性能监控模块
-from src.utils.action_logger import log_action
+from src.utils.performance_monitor import performance_monitor
+
 
 def convert_to_list(file_path: str) -> List[str]:
     """
     将输入字符串按空格分割成字符串列表。
-
+    
     Args:
         file_path (str): 需要被分割的字符串，通常是一个包含空格的文件路径或日志行。
 
@@ -22,7 +25,7 @@ def convert_to_list(file_path: str) -> List[str]:
 def deduplicate_lines(input_path: Path, output_path: Path, buffer_size: int = 1000) -> None:
     """
     读取日志文件，去重后写入输出文件。
-
+    
     Args:
         input_path (Path): 输入日志文件路径。
         output_path (Path): 输出文件路径。
@@ -31,30 +34,30 @@ def deduplicate_lines(input_path: Path, output_path: Path, buffer_size: int = 10
     try:
         # 确保输出目录存在
         output_path.parent.mkdir(parents=True, exist_ok=True)
-
+        
         seen = set()  # 用于去重
-        buffer = []  # 写入缓冲区
-
+        buffer = []     # 写入缓冲区
+        
         with open(input_path, 'r', encoding='utf-8') as f_in:
             for line in f_in:
                 processed_line = convert_to_list(line.strip())
-
+                
                 # 转换为字符串以便比较
                 line_str = str(processed_line)
-
+                
                 if line_str not in seen:
                     seen.add(line_str)
                     buffer.append(processed_line)
-
+                    
                 # 当缓冲区达到指定大小时写入文件
                 if len(buffer) >= buffer_size:
                     write_buffer_to_file(buffer, output_path, mode='a')
                     buffer.clear()
-
+        
         # 写入剩余的缓冲区内容
         if buffer:
             write_buffer_to_file(buffer, output_path, mode='a')
-
+            
     except FileNotFoundError:
         print(f"错误：找不到文件 {{input_path}}")
     except PermissionError:
@@ -66,7 +69,7 @@ def deduplicate_lines(input_path: Path, output_path: Path, buffer_size: int = 10
 def write_buffer_to_file(buffer: list, output_path: Path, mode: str = 'w') -> None:
     """
     将缓冲区内容写入文件。
-
+    
     Args:
         buffer (list): 包含处理结果的列表。
         output_path (Path): 输出文件路径。
@@ -77,15 +80,14 @@ def write_buffer_to_file(buffer: list, output_path: Path, mode: str = 'w') -> No
             f_out.write(str(item) + '\n')
 
 
-@log_action
+@performance_monitor
 def main():
     """主函数，设置路径并调用去重函数。"""
     root_dir = Path(__file__).resolve().parents[2]  # 使用通用模块获取项目根目录
     input_file = root_dir / "data" / "processed_logs" / "nonprefix.log"
     output_file = root_dir / "data" / "processed_logs" / "deduplicated_sorted.log"
-
+    
     deduplicate_lines(input_file, output_file)
-
 
 if __name__ == "__main__":
     main()

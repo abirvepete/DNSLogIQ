@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 # 引入新的通用模块
 from src.utils.action_logger import log_action
-from src.utils.performance_monitor import performance_monitor
+
 
 # 定义全局路径
 PROJECT_ROOT = Path(__file__).resolve().parents[2]  # 项目根目录
@@ -16,7 +16,7 @@ def clean_prefix_of_line(log_line: str) -> list:
     :param log_line:
     :return: 清洗后的日志列表
     """
-    parts = log_line.split(' ')
+    parts = log_line.strip().split(' ')
 
     if len(parts) > 5:
         # 检查第4个字段是否包含 '['，第5个是否包含 ']'
@@ -86,7 +86,6 @@ def write_cleaned_logs(input_path, output_path):
 
 # ========== 主程序入口 ==========
 @log_action
-@performance_monitor
 def main():
     """
     后续优化：加入try进行错误异常控制
